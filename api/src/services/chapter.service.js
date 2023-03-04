@@ -7,24 +7,40 @@ const auth = new google.auth.GoogleAuth({
 });
 module.exports = {
 getAllChapters: async () => {
-  // var response = await db.Questions.findAll({
-  //   attributes: ["id", "question"],
-  //   include: [
-  //     { model: db.Options, as: "options", attributes: ["id", "option"] },
-  //   ],
-  // });
-  // return response;
-},
-getChapterById: async(chapterId) => {
   const authClientObject = await auth.getClient();
   const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
   const request = {
-    spreadsheetId: '1Bk0uXXTYhBom2d3hN2WO7Eyo5bwPHjtR_zS2n0mSUis',
+    spreadsheetId: '1LeF8L-fh-6lLYpvYQv2Foxw9t0DHUB0r9UJWZ-cVduA',
     ranges: [],
     includeGridData: false
   };
-  let res = await googleSheetsInstance.spreadsheets.get(request);
+  let res = (await googleSheetsInstance.spreadsheets.get(request)).data;
+  return res.sheets.map(sheet => {
+    const {sheetId, title, index: sheetIndex} = sheet.properties;
+    return {
+      sheetId, title, sheetIndex
+    }
+  });
+},
+getChapterByName: async(chapterName) => {
+  const authClientObject = await auth.getClient();
+  const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
+  const request = {
+    spreadsheetId: '1LeF8L-fh-6lLYpvYQv2Foxw9t0DHUB0r9UJWZ-cVduA',
+    ranges: [chapterName],
+    includeGridData: true
+  };
+  try{
+  let res = (await googleSheetsInstance.spreadsheets.get(request)).data;
   console.log("Response is: ", res);
+  }catch(err){
+    if(err.message?.startsWith('Unable to parse range')){
+      var error = new Error('Sheet not found');
+      error.code = 404;
+      throw error;
+    }
+  }
+
   //googleSheetsInstance.spreadsheets.get()
   return {
     id: '1',
