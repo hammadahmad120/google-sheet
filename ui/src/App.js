@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { ThemeProvider, CssBaseline } from "@material-ui/core";
 import theme  from './utils/theme';
 import AppRoutes from "./routes/AppRoutes";
-import NavBar from "components/navbar/NavBar";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +11,7 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <NavBar />
-        <AppRoutes user={this.state.user} />
+        <AppRoutes />
       </ThemeProvider>
     );
   }

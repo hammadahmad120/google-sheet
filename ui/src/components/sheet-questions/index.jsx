@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import { BottomNavigation, BottomNavigationAction, Box, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,23 +15,29 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
+  heading: {
+    background: 'yellow'
   },
+  questionsSection:{
+    marginTop: '24px'
+  }
 }));
 
-export default function NavBar() {
+const SheetQuestions= ({questions}) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            PsycCheck
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    <>
+    <Typography variant="h6"> <span className={classes.heading}>QUESTIONS</span></Typography>
+    <div className={classes.questionsSection}>
+        {Object.keys(questions).map((question) => (
+            <div>
+                <b>{question}</b>: {questions[question]}
+            </div>
+            ))}
     </div>
+    </>
   );
 }
+
+export default SheetQuestions;
