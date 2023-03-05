@@ -10,7 +10,7 @@ getAllChapters: async () => {
   const authClientObject = await auth.getClient();
   const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
   const request = {
-    spreadsheetId: '1LeF8L-fh-6lLYpvYQv2Foxw9t0DHUB0r9UJWZ-cVduA',
+    spreadsheetId: process.env.SHEET_ID,
     ranges: [],
     includeGridData: false
   };
@@ -26,7 +26,7 @@ getChapterByName: async(chapterName) => {
   const authClientObject = await auth.getClient();
   const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
   const request = {
-    spreadsheetId: '1LeF8L-fh-6lLYpvYQv2Foxw9t0DHUB0r9UJWZ-cVduA',
+    spreadsheetId: process.env.SHEET_ID,
     ranges: [chapterName],
     includeGridData: true
   };
@@ -86,7 +86,6 @@ getChapterByName: async(chapterName) => {
   responseObj.data.answersCategories = responseObj.data.answersCategoriesPolling.filter(c=> c!=='Polling');
   return responseObj;
   }catch(err){
-    console.log("Error is:------------------", err.message);
     if(err.message?.startsWith('Unable to parse range')){
       const error = new Error('Sheet not found');
       error.code = 404;
