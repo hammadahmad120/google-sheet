@@ -16,11 +16,13 @@ import { ERROR_ALERT } from "constants/alertTypes";
 import { Alert } from "@material-ui/lab";
 import SheetNavigation from "components/sheet-navigation";
 import SheetQuestions from "components/sheet-questions";
+import AnswersContent from "components/answers-content";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
+    paddingBottom: '80px',
     display: "flex",
     flexDirection: "column",
   }
@@ -53,7 +55,6 @@ const Sheet = (props) => {
     try{
       const sheetData = (await getSheetByName(selectedSheet)).data?.data;
       setSheetData(sheetData);
-      console.log("Result is: --------------", sheetData);
     }catch(err){
       showAlert(ERROR_MESSAGE, ERROR_ALERT);
     }
@@ -91,15 +92,13 @@ const Sheet = (props) => {
           <Alert severity={alertState.alertType}>{alertState.message}</Alert>
         </Snackbar>
       )}
-      <Paper elevation={3} className={classes.paper}>
-        {isLoading ? <CircularProgress style={{position:'fixed',top:'4%', left:'50%'}} size={15} /> : null}
+        {isLoading ? <CircularProgress style={{position:'fixed',top:'50%', left:'50%'}} size={20} /> : null}
         {!isLoading && sheetData ? (
-          <>
+          <Paper elevation={3} className={classes.paper}>
           <SheetQuestions questions={sheetData.data.question} />
-            
-          </>
+          <AnswersContent sheetData={sheetData} />
+          </Paper>
         ) : null}
-      </Paper>
       { sheets && (<SheetNavigation selectedSheet={selectedSheet} changeSelectedSheet={changeSheet} sheets={sheets} />)}
     </Container>
   );

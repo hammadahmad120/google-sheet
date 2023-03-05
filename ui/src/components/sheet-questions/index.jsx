@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     background: 'yellow'
   },
   questionsSection:{
-    marginTop: '24px'
+    marginTop: '24px',
+    marginBottom:'24px'
   }
 }));
 
