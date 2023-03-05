@@ -1,4 +1,4 @@
-# PsycCheck
+# Google-Sheets-View
 #### Instructions to start app
 ##### API
 `1- npm i`<br>
@@ -29,6 +29,3 @@ tested on node `v14.19.1` <br>
     * seperate setup for migrations, models,and seeders
     * seperate error handling, and logger middlewares
 * `bunyan` is used for logging
-* using `Sequelize`
-* using `Joi` for request validations
-* seperate validation schemas 
